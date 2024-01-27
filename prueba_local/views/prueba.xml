@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<odoo>
+    <record id="prueba_form" model="ir.ui.view">
+        <field name="name">prueba.form</field>
+        <field name="model">prueba</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="hola_mundo" string="Decir Hola" type="object" class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="description"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="nro_intentos"/>
+                            <field name="porcentaje_exito"/>
+                        </group>
+                        <group>
+                            <field name="fue_exitoso"/>
+                            <field name="partner_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="prueba_tree" model="ir.ui.view">
+        <field name="name">prueba.tree</field>
+        <field name="model">prueba</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="description"/>
+                <field name="partner_id"/>
+                <field name="fue_exitoso"/>
+            </tree>
+        </field>
+    </record>
+    <record id="prueba_action" model="ir.actions.act_window">
+        <field name="name">Pruebas</field>
+        <field name="res_model">prueba</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem
+            id="prueba_menuitem"
+            name="Pruebas"
+            parent="contacts.res_partner_menu_config"
+            action="prueba_action"
+            sequence="1"
+    />
+</odoo>
