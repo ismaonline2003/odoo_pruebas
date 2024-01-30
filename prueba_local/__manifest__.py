@@ -9,7 +9,8 @@
     'data': [
         'security/ir.model.access.csv',
         'views/res_partner.xml',
-        'views/prueba.xml'
+        'views/prueba.xml',
+        'reports/forma_libre_report.xml'
     ],
     'application': True,
     'installable': True,

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!-- PAPERFORMAT (PARA DAR MARGEN AL REPORTE) -->
+        <record id="paperformat_free_format_invoices" model="report.paperformat">
+            <field name="name">A4 custom</field>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field><!-- Portrait y Landscape -->
+            <field name="margin_top">60</field>
+            <field name="margin_bottom">32</field>
+            <field name="margin_left">12</field>
+            <field name="margin_right">12</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <!-- TEMPLATE -->
+        <template id="forma_libre_report">
+            <t t-call="web.basic_layout">
+                <t t-call="web.html_container">
+                    <div class="header">
+                    </div>
+                    <div class="page" style="font-size: 12px !important; ">
+                        <div class="oe_structure"/>
+                        <t t-foreach="docs" t-as="o">
+                            <div class="row">
+                                <div class="col-6">
+                                    <strong>Cliente: </strong> <span t-esc="cliente.name"/>
+                                </div>
+                                <div class="col-6">
+                                    <strong>Nro de Teléfono: </strong> <span t-esc="cliente.phone"/>
+                                </div>
+                            </div>
+                            <table style="width: 100% !important; border: 1px solid black; border-collapse: collapse;">
+                                <tr>
+                                    <td style="width: 25% !important;">
+                                        Producto
+                                    </td>
+                                    <td style="width: 40% !important;">
+                                        Descripción
+                                    </td>
+                                    <td style="width: 15% !important;">
+                                        Precio Unitario
+                                    </td>
+                                    <td style="width: 20% !important;">
+                                        Precio Subtotal
+                                    </td>
+                                </tr>
+                                <t t-foreach="lineas_factura" t-as="linea">
+                                    <tr>
+                                        <td style="width: 25% !important;">
+                                            <span t-esc="linea['producto']"/>
+                                        </td>
+                                        <td style="width: 40% !important;">
+                                            <span t-esc="linea['descripcion']"/>
+                                        </td>
+                                        <td style="width: 15% !important;">
+                                            <span t-esc="linea['precio_unitario']"/>
+                                        </td>
+                                        <td style="width: 20% !important;">
+                                            <span t-esc="linea['subtotal']"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </t>
+                    </div>
+                    <div class="footer">
+                    </div>
+                    <p style="page-break-before:always;"/>
+                </t>
+            </t>
+        </template>
+        <!-- ACCIÓN QUE DISPARA EL REPORTE       -->
+        <record id="forma_libre_report_action" model="ir.actions.report">
+            <field name="name">Forma Libre</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">prueba_local.forma_libre_report</field>
+            <field name="report_file">prueba_local.forma_libre_report</field>
+            <field name="print_report_name">'Forma Libre - %s' % object.name</field>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>
